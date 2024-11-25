@@ -10,17 +10,18 @@
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="275dp"
+        android:backgroundTint="@color/teal_700"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:collapsedTitleTextColor="@color/white"
             app:contentScrim="@color/accent"
-            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
-            app:title="Meal Name"
             app:expandedTitleTextColor="@color/white"
-            app:collapsedTitleTextColor="@color/white">
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+            app:title="Meal Name">
 
             <ImageView
                 android:id="@+id/image_meal_detail"
@@ -41,12 +42,12 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/accent"
         android:src="@drawable/ic_favorite"
         android:tint="@color/white"
-        android:backgroundTint="@color/accent"
         app:layout_anchor="@id/app_bar_layout"
-        app:layout_anchorGravity="bottom|end"
-        android:layout_marginEnd="10dp"/>
+        app:layout_anchorGravity="bottom|end" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -57,8 +58,70 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <LinearLayout
+                android:id="@+id/linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_category_meal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_categories"
+                    android:drawableTint="@color/black"
+                    android:fontFamily="@font/urbanist_black"
+                    android:text="Category: Meal"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_area_meal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_location"
+                    android:drawableTint="@color/black"
+                    android:fontFamily="@font/urbanist_black"
+                    android:text="Area: Palestine"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_instructions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/urbanist_black"
+                android:text="- Instructions: "
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/linear_layout"
+                app:layout_constraintTop_toBottomOf="@id/linear_layout" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <ImageView
+        android:id="@+id/image_youtube"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_youtube" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_anchor="@id/app_bar_layout"
+        app:layout_anchorGravity="bottom" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

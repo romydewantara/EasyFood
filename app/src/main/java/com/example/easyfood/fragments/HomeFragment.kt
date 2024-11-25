@@ -18,6 +18,13 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var homeMvvm: HomeViewModel
+    private lateinit var randomMeal: Meal
+
+    companion object {
+        const val MEAL_ID = "package com.example.easyfood.fragments.idMeal"
+        const val MEAL_NAME = "package com.example.easyfood.fragments.nameMeal"
+        const val MEAL_THUMB = "package com.example.easyfood.fragments.thumbMeal"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +50,9 @@ class HomeFragment : Fragment() {
     private fun onRandomMealClicked() {
         binding.imageRandomMeal.setOnClickListener {
             val intent = Intent(activity, MealActivity::class.java)
+            intent.putExtra(MEAL_ID, randomMeal.idMeal)
+            intent.putExtra(MEAL_NAME, randomMeal.strMeal)
+            intent.putExtra(MEAL_THUMB, randomMeal.strMealThumb)
             startActivity(intent)
         }
     }
@@ -53,6 +63,7 @@ class HomeFragment : Fragment() {
                 Glide.with(this@HomeFragment)
                     .load(value.strMealThumb)
                     .into(binding.imageRandomMeal)
+                randomMeal = value
             }
         })
     }
