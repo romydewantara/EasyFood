@@ -1,11 +1,12 @@
 package com.example.easyfood.pojo
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 @Entity(tableName = "mealInformation")
 data class Meal(
     val dateModified: Any?,
-    val idMeal: String,
+    @PrimaryKey val idMeal: String,
     val strArea: String?,
     val strCategory: String?,
     val strCreativeCommonsConfirmed: Any?,

@@ -17,6 +17,7 @@ import com.example.easyfood.databinding.FragmentHomeBinding
 import com.example.easyfood.pojo.Meal
 import com.example.easyfood.pojo.MealsByCategory
 import com.example.easyfood.ui.CategoryMealsActivity
+import com.example.easyfood.ui.MainActivity
 import com.example.easyfood.ui.MealActivity
 import com.example.easyfood.viewModel.HomeViewModel
 
@@ -37,9 +38,8 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        homeMvvm = ViewModelProvider(this)[HomeViewModel::class.java]
-        mostPopularAdapter = MostPopularAdapter()
-        categoriesAdapter = CategoriesAdapter()
+
+        homeMvvm = (activity as MainActivity).viewModel
     }
 
     override fun onCreateView(
@@ -71,6 +71,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun preparePopularItemsRecyclerView() {
+        mostPopularAdapter = MostPopularAdapter()
         binding.recyclerPopularMeal.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             adapter = mostPopularAdapter
@@ -78,6 +79,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun prepareCategoriesRecyclerView() {
+        categoriesAdapter = CategoriesAdapter()
         binding.recyclerCategories.apply {
             layoutManager = GridLayoutManager(activity, 3, LinearLayoutManager.VERTICAL, false)
             adapter = categoriesAdapter

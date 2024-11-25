@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.easyfood.pojo.Meal
 
-@Database(entities = [Meal::class], version = 1)
+@Database(entities = [Meal::class], version = 1, exportSchema = false)
 @TypeConverters(MealTypeConverter::class)
 abstract class MealDatabase: RoomDatabase() {
 

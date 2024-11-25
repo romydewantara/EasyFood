@@ -8,9 +8,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.easyfood.databinding.ActivityMealBinding
+import com.example.easyfood.db.MealDatabase
 import com.example.easyfood.fragments.HomeFragment
 import com.example.easyfood.pojo.Meal
 import com.example.easyfood.viewModel.MealViewModel
+import com.example.easyfood.viewModel.MealViewModelFactory
 
 class MealActivity : AppCompatActivity() {
 
@@ -21,6 +23,7 @@ class MealActivity : AppCompatActivity() {
     private lateinit var mealThumb: String
     private lateinit var youtubeLink: String
     private lateinit var mealMvvm: MealViewModel
+    private var mealToSave: Meal? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,14 +35,26 @@ class MealActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }*/
-        mealMvvm = ViewModelProvider(this)[MealViewModel::class.java]
+        val mealDatabase = MealDatabase.getInstance(this@MealActivity)
+        val mealViewModelFactory = MealViewModelFactory(mealDatabase)
+        mealMvvm = ViewModelProvider(this, mealViewModelFactory)[MealViewModel::class.java]
+
         getMealInformationFromIntent()
         setMealInformation()
 
         mealMvvm.getMealDetails(mealId)
         observeMealDetailsLiveData()
 
+        onFavoriteClick()
         onYoutubeClick()
+    }
+
+    private fun onFavoriteClick() {
+        binding.buttonFavorite.setOnClickListener {
+            mealToSave?.let {
+                mealMvvm.insertMeal(it)
+            }
+        }
     }
 
     private fun onYoutubeClick() {
@@ -69,6 +84,7 @@ class MealActivity : AppCompatActivity() {
                 binding.textCategoryMeal.text = "Category: ${value.strCategory}"
                 binding.textAreaMeal.text = "Area: ${value.strArea}"
                 binding.textInstructions.text = value.strInstructions
+                mealToSave = value
                 youtubeLink = value.strYoutube
             }
         })
