@@ -16,6 +16,7 @@ import com.example.easyfood.adapter.MostPopularAdapter
 import com.example.easyfood.databinding.FragmentHomeBinding
 import com.example.easyfood.pojo.Meal
 import com.example.easyfood.pojo.MealsByCategory
+import com.example.easyfood.ui.CategoryMealsActivity
 import com.example.easyfood.ui.MealActivity
 import com.example.easyfood.viewModel.HomeViewModel
 
@@ -31,6 +32,7 @@ class HomeFragment : Fragment() {
         const val MEAL_ID = "package com.example.easyfood.fragments.idMeal"
         const val MEAL_NAME = "package com.example.easyfood.fragments.nameMeal"
         const val MEAL_THUMB = "package com.example.easyfood.fragments.thumbMeal"
+        const val MEAL_CATEGORY = "package com.example.easyfood.fragments.categoryName"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,6 +67,7 @@ class HomeFragment : Fragment() {
         observeCategoriesLiveData()
 
         onPopularItemClicked()
+        onCategoryItemClicked()
     }
 
     private fun preparePopularItemsRecyclerView() {
@@ -122,6 +125,14 @@ class HomeFragment : Fragment() {
             intent.putExtra(MEAL_ID, categoryMeals.idMeal)
             intent.putExtra(MEAL_NAME, categoryMeals.strMeal)
             intent.putExtra(MEAL_THUMB, categoryMeals.strMealThumb)
+            startActivity(intent)
+        }
+    }
+
+    private fun onCategoryItemClicked() {
+        categoriesAdapter.onItemClick = { category ->
+            val intent = Intent(activity, CategoryMealsActivity::class.java)
+            intent.putExtra(MEAL_CATEGORY, category.strCategory)
             startActivity(intent)
         }
     }

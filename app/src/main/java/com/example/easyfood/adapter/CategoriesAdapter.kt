@@ -11,6 +11,7 @@ import com.example.easyfood.pojo.Category
 class CategoriesAdapter(): RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder>() {
 
     private var categoryList = ArrayList<Category>()
+    var onItemClick: ((Category) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         return CategoryViewHolder(
@@ -25,6 +26,10 @@ class CategoriesAdapter(): RecyclerView.Adapter<CategoriesAdapter.CategoryViewHo
             .load(categoryList[position].strCategoryThumb)
             .into(holder.binding.imageCategory)
         holder.binding.textCategoryHome.text = categoryList[position].strCategory
+
+        holder.itemView.setOnClickListener {
+            onItemClick!!.invoke(categoryList[position])
+        }
     }
 
     override fun getItemCount(): Int {

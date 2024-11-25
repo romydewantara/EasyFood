@@ -22,7 +22,6 @@ class HomeViewModel(): ViewModel() {
     private var categoriesLiveData = MutableLiveData<List<Category>>()
 
     fun getRandomMeal() {
-
         RetrofitInstance.api.getRandomMeal().enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
                 if (response.body() != null) {
