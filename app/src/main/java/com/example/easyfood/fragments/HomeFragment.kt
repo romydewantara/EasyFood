@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.easyfood.adapter.CategoriesAdapter
 import com.example.easyfood.adapter.MostPopularAdapter
 import com.example.easyfood.databinding.FragmentHomeBinding
+import com.example.easyfood.fragments.bottomsheet.MealBottomSheetFragment
 import com.example.easyfood.pojo.Meal
 import com.example.easyfood.pojo.MealsByCategory
 import com.example.easyfood.ui.CategoryMealsActivity
@@ -66,6 +67,7 @@ class HomeFragment : Fragment() {
         observeCategoriesLiveData()
 
         onPopularItemClicked()
+        onPopularItemLongClicked()
         onCategoryItemClicked()
     }
 
@@ -127,6 +129,13 @@ class HomeFragment : Fragment() {
             intent.putExtra(MEAL_NAME, categoryMeals.strMeal)
             intent.putExtra(MEAL_THUMB, categoryMeals.strMealThumb)
             startActivity(intent)
+        }
+    }
+
+    private fun onPopularItemLongClicked() {
+        mostPopularAdapter.onItemLongClick = {
+            val mealBottomSheetFragment = MealBottomSheetFragment.newInstance(it.idMeal)
+            mealBottomSheetFragment.show(childFragmentManager, "meal_info")
         }
     }
 
