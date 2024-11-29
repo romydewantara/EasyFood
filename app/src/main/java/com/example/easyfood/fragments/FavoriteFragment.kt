@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.easyfood.adapter.FavoritesMealsAdapter
+import com.example.easyfood.adapter.MealsAdapter
 import com.example.easyfood.databinding.FragmentFavoriteBinding
 import com.example.easyfood.ui.MainActivity
 import com.example.easyfood.viewModel.HomeViewModel
@@ -21,7 +21,7 @@ class FavoriteFragment : Fragment() {
 
     private lateinit var binding: FragmentFavoriteBinding
     private lateinit var viewModel: HomeViewModel
-    private lateinit var favoritesMealsAdapter: FavoritesMealsAdapter
+    private lateinit var mealsAdapter: MealsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +55,7 @@ class FavoriteFragment : Fragment() {
             @SuppressLint("ShowToast")
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                val deletedMeal = favoritesMealsAdapter.differ.currentList[position]
+                val deletedMeal = mealsAdapter.differ.currentList[position]
                 viewModel.deleteMeal(deletedMeal)
                 Snackbar.make(binding.root, "Meal has been deleted", Snackbar.LENGTH_LONG)
                     .setAction("Undo") {
@@ -68,16 +68,16 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun prepareFavoriteRecyclerView() {
-        favoritesMealsAdapter = FavoritesMealsAdapter()
+        mealsAdapter = MealsAdapter()
         binding.recyclerViewFavorites.apply {
             layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-            adapter = favoritesMealsAdapter
+            adapter = mealsAdapter
         }
     }
 
     private fun observeFavoriteMeals() {
         viewModel.observeFavoritesMealsLiveData().observe(viewLifecycleOwner, Observer { meals ->
-            favoritesMealsAdapter.differ.submitList(meals)
+            mealsAdapter.differ.submitList(meals)
         })
     }
 
